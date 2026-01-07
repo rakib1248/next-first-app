@@ -1,5 +1,7 @@
 "use client";
 
+import { UserFormDataDto } from "../user/user.dto";
+
 import { createContext, useState } from "react";
 import { userData } from "../fakeData";
 

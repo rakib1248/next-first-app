@@ -7,9 +7,10 @@ import { UserFormDataDto } from "../user.dto";
 
 export default function UserForm() {
   const { user, setUser } = useContext(AuthContext);
+
   const router = useRouter();
   const [formData, setFormData] = useState<UserFormDataDto>({
-
+    id: 0,
     name: "",
     username: "",
     email: "",
@@ -28,12 +29,15 @@ export default function UserForm() {
   ) => {
     const { name, value } = e.target;
 
-    // যদি ইনপুট নেম 'address.' বা 'company.' দিয়ে শুরু হয়
+    // যদি ইনপুট নেম 'address.' বা 'company.' দিয়ে শুরু হয়
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
       setFormData((prev: UserFormDataDto) => ({
         ...prev,
-        [parent]: { ...(prev[parent as keyof UserFormDataDto] as Record<string, string>), [child]: value },
+        [parent]: {
+          ...(prev[parent as keyof UserFormDataDto] as Record<string, string>),
+          [child]: value,
+        },
       }));
     } else {
       setFormData((prev: UserFormDataDto) => ({ ...prev, [name]: value }));
@@ -44,10 +48,17 @@ export default function UserForm() {
     e.preventDefault();
     console.log("Submitted Data:", formData);
 
-    setUser(() => [...user, { id: user.length + 1, image: `https://i.pravatar.cc/150?u=${user.length + 1}`, ...formData }]);
+    setUser(() => [
+      ...user,
+      {
+        image: `https://i.pravatar.cc/150?u=${user.length + 1}`,
+        ...formData,
+        id: (user.length + 1) as number,
+      },
+    ]);
 
-      setFormData({
-       
+    setFormData({
+      id: 0,
       name: "",
       username: "",
       email: "",

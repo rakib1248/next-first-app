@@ -4,6 +4,7 @@ import { AuthContext } from "@/app/Provider/userSate";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, use } from "react"; // React থেকে use ইমপোর্ট করুন
+import { UserFormDataDto } from "../user.dto";
 
 // Client Component-এ async function ব্যবহার করা যায় না সরাসরি
 function Page({ params }: { params: Promise<{ singleuser: string }> }) {
@@ -15,7 +16,7 @@ function Page({ params }: { params: Promise<{ singleuser: string }> }) {
   const { user } = useContext(AuthContext);
 
   // ৩. ডাটা খুঁজে বের করা
-  const singleUser = user.find((u: any) => parseInt(u.id) === parseInt(id));
+  const singleUser = user.find((u: UserFormDataDto) => u.id === parseInt(id));
 
   // ৪. কন্ডিশনাল রেন্ডারিং
   if (!singleUser) {
