@@ -3,11 +3,13 @@
 import { AuthContext } from "@/app/Provider/userSate";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
+import { UserFormDataDto } from "../user.dto";
 
 export default function UserForm() {
   const { user, setUser } = useContext(AuthContext);
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UserFormDataDto>({
+
     name: "",
     username: "",
     email: "",
@@ -29,12 +31,12 @@ export default function UserForm() {
     // যদি ইনপুট নেম 'address.' বা 'company.' দিয়ে শুরু হয়
     if (name.includes(".")) {
       const [parent, child] = name.split(".");
-      setFormData((prev) => ({
+      setFormData((prev: UserFormDataDto) => ({
         ...prev,
-        [parent]: { ...prev[parent], [child]: value },
+        [parent]: { ...(prev[parent as keyof UserFormDataDto] as Record<string, string>), [child]: value },
       }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev: UserFormDataDto) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -44,7 +46,8 @@ export default function UserForm() {
 
     setUser(() => [...user, { id: user.length + 1, image: `https://i.pravatar.cc/150?u=${user.length + 1}`, ...formData }]);
 
-    setFormData({
+      setFormData({
+       
       name: "",
       username: "",
       email: "",

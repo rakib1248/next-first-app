@@ -3,6 +3,7 @@
 import { AuthContext } from "@/app/Provider/userSate";
 import { useContext } from "react";
 import UserCard from "@/app/user/userCard";
+import { UserFormDataDto } from "./user/user.dto";
 
 function Page() {
   const { user } = useContext(AuthContext);
@@ -15,8 +16,8 @@ function Page() {
       {/* গ্রিড লেআউট */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {user
-          .sort((a: any, b: any) => b.id - a.id)
-          .map((user: any, index: number) => (
+          .sort((a: UserFormDataDto, b: UserFormDataDto) => b.id - a.id)
+          .map((user: UserFormDataDto, index: number) => (
             <UserCard key={user.id} user={user} index={index} />
           ))}
       </div>
